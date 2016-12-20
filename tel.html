@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html manifest="cache.manifest">
+<head>
+    <title>Kandy Phone Book</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css" />
+    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
+
+    <script src="https://kandy-portal.s3.amazonaws.com/public/javascript/kandy/2.5.0/kandy.js" ></script>
+
+
+  <script src="https://developer.kandy.io/javascripts/moment.min.js"></script>
+  <script src="https://developer.kandy.io/javascripts/handlebars-v1.3.0.js"></script>
+  <script src="https://developer.kandy.io/javascripts/extensions.js"></script>
+
+    <style type="text/css">
+        .img {padding-left:70px; }
+        h1 {text-align: center;}
+    </style>
+    <script src="tel.js"></script>
+</head>
+<body>
+<div data-role="page" id="main">
+
+    <div data-role="header">
+        <heading>
+            <h1>Kandy PSTN</h1>            
+        </heading>
+    </div>
+
+    <div data-role="content">
+        <p id="callStatus" />
+        <ul id="list" data-role="listview" data-filter="true" data-autodividers="true">
+        </ul>
+    </div>
+
+    <div data-role="footer" data-position="fixed">
+        <nav>
+            <a href="#entry" data-role="button"
+               data-inline="true" data-mini="true"
+               data-icon="plus" id="add">Add Item</a>
+        </nav>
+    </div>
+</div>
+
+<div data-role="page" id="entry">
+
+    <div data-role="header">
+        <h1 id="name">Kandy PSTN Entry</h1>
+        <a href="#" data-rel="back" data-icon="back">Back</a>
+    </div>
+
+    <div data-role="content">
+        <form>
+            <label for="fullname">Full Name:</label>
+            <input type="text" id="fullname"/>
+            <label for="mobile">Mobile number:</label>
+            <input type="tel" id="mobile"/>
+            <table>
+                <tr>
+                    <td>
+                         <a data-role="button" id="mobileCall" data-mini="true" href="">Call</a>
+                    </td>
+                    <td>
+                        <a data-role="button" id="mobileHungUp" data-mini="true" href="">Hung Up</a>
+                    </td>
+                </tr>
+            </table>
+           
+            <label for="home">Home number:</label>
+            <input type="tel" id="home"/>
+            <label for="email">Email:</label>
+            <input type="email" id="email"/><a data-role="button" id="mailbutton" data-mini="true"
+                     href="">Send email</a>
+        </form>
+    </div>
+
+    <div data-role="footer" data-position="fixed">
+        <nav>
+            <a href="#main" id="update" data-role="button" data-inline="true"
+               data-mini="true" data-icon="refresh">Update</a>
+            <a href="#main" id="del" data-role="button" data-inline="true"
+               data-mini="true" data-icon="minus" >Delete Item</a>
+        </nav>
+
+    </div>
+</div>
+</body>
+<script>
+    // Note – this script inserts letter dividers into the "#list" element on the
+    // main page.
+    $(document).on("pageinit", "#main", function(){
+        $("#list").listview({
+            autodividers: true,
+            autodividersSelector: function (li) {    // Do for each entry
+                var out = li.text().substring(0, 1); // Use initial letter of surname
+                return out;
+            }
+        }).listview('refresh');
+    });
+</script>
+</html>
